@@ -24,7 +24,7 @@ BreachType inferBreach(CoolingType TypeOfCooling, double TempValue);
 
 typedef enum {
   TO_CONTROLLER,
-  TO_EMAIL
+  TO_EMAIL,
   NUMBEROF_ALERT_TARGETS
 } AlertTarget;
 

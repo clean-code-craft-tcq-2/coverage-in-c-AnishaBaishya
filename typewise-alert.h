@@ -38,7 +38,7 @@ typedef struct{
   int UpperLimit;
 }TempConfig;
 
-void checkAndAlert(
+BreachType checkAndAlert(
   AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC);
 
 void sendToController(BreachType breachType);

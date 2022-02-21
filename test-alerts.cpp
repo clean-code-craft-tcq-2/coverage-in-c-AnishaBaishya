@@ -7,7 +7,7 @@ TEST_CASE("infers the breach according to limits") {
   REQUIRE(inferBreach(PASSIVE_COOLING, -20)== TOO_LOW);
   REQUIRE(inferBreach(PASSIVE_COOLING, 45)== TOO_HIGH);
   REQUIRE(inferBreach(HI_ACTIVE_COOLING, -20)== TOO_LOW);
-  REQUIRE(inferBreach(HI_ACTIVE_COOLING, 50)== TOO_LOW);
+  REQUIRE(inferBreach(HI_ACTIVE_COOLING, 50)== TOO_HIGH);
   REQUIRE(inferBreach(MED_ACTIVE_COOLING, -20)== TOO_LOW);
-  REQUIRE(inferBreach(MED_ACTIVE_COOLING, 45)== TOO_LOW);
+  REQUIRE(inferBreach(MED_ACTIVE_COOLING, 45)== TOO_HIGH);
 }

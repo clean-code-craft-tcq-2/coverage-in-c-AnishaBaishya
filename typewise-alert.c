@@ -1,52 +1,29 @@
 #include "typewise-alert.h"
 #include <stdio.h>
 
-BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
-  if(value < lowerLimit) {
-    return TOO_LOW;
-  }
-  if(value > upperLimit) {
-    return TOO_HIGH;
-  }
-  return NORMAL;
-}
+const struct TempConfig TemperatureConfiguration[NUMBEROF_COOLING_TYPES]={
+  {PASSIVECOOLING_LOWERLIMIT,PASSIVECOOLING_UPPERLIMIT},
+  {HI_ACTIVECOOLING_LOWERLIMIT,HI_ACTIVECOOLING_UPPERLIMIT},
+  {MED_ACTIVECOOLING_LOWERLIMIT,MED_ACTIVECOOLING_UPPERLIMIT}
+};
 
-BreachType classifyTemperatureBreach(
-    CoolingType coolingType, double temperatureInC) {
-  int lowerLimit = 0;
-  int upperLimit = 0;
-  switch(coolingType) {
-    case PASSIVE_COOLING:
-      lowerLimit = 0;
-      upperLimit = 35;
-      break;
-    case HI_ACTIVE_COOLING:
-      lowerLimit = 0;
-      upperLimit = 45;
-      break;
-    case MED_ACTIVE_COOLING:
-      lowerLimit = 0;
-      upperLimit = 40;
-      break;
+BreachType inferBreach(CoolingType TypeOfCooling, double TempValue) {
+  BreachType returnbreachtype = NORMAL;
+  if(TempValue < TemperatureConfiguration[TypeOfCooling].LowerLimit) {
+    returnbreachtype= TOO_LOW;
   }
-  return inferBreach(temperatureInC, lowerLimit, upperLimit);
+  if(TempValue > TemperatureConfiguration[TypeOfCooling].UpperLimit) {
+    returnbreachtype = TOO_HIGH;
+  }
+  return returnbreachtype;
 }
 
 void checkAndAlert(
     AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
 
-  BreachType breachType = classifyTemperatureBreach(
+  BreachType breachType = inferBreach(
     batteryChar.coolingType, temperatureInC
   );
-
-  switch(alertTarget) {
-    case TO_CONTROLLER:
-      sendToController(breachType);
-      break;
-    case TO_EMAIL:
-      sendToEmail(breachType);
-      break;
-  }
 }
 
 void sendToController(BreachType breachType) {

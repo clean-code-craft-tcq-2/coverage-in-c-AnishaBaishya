@@ -17,6 +17,7 @@ TEST_CASE("checks the main function Alert Target CONTROLLER") {
   CoolingType coolingtype = MED_ACTIVE_COOLING;
   BatteryCharacter batteryChar = {coolingtype, "BrandX"};
   REQUIRE(checkAndAlert(alertTarget, batteryChar, 45) == TOO_HIGH);
+  REQUIRE(checkAndAlert(alertTarget, batteryChar, -5) == TOO_LOW);
 }
 
 TEST_CASE("checks the main function Alert Target EMAIL") {
@@ -24,4 +25,5 @@ TEST_CASE("checks the main function Alert Target EMAIL") {
   CoolingType coolingtype = HI_ACTIVE_COOLING;
   BatteryCharacter batteryChar = {coolingtype, "BrandX"};
   REQUIRE(checkAndAlert(alertTarget, batteryChar, -10) == TOO_LOW);
+  REQUIRE(checkAndAlert(alertTarget, batteryChar, 55) == TOO_HIGH);
 }

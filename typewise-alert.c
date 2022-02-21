@@ -7,6 +7,10 @@ const struct TempConfig TemperatureConfiguration[NUMBEROF_COOLING_TYPES]={
   {MED_ACTIVECOOLING_LOWERLIMIT,MED_ACTIVECOOLING_UPPERLIMIT}
 };
 
+void (*AlertTarget_fp[NUMBEROF_ALERT_TARGETS])(BreachType)={sendToController,sendToEmail};
+
+const char* breachAlertMessage[] = {"Hi, the temperature is Normal","Hi, the temperature is too low", "Hi, the temperature is too high"};
+
 BreachType inferBreach(CoolingType TypeOfCooling, double TempValue) {
   BreachType returnbreachtype = NORMAL;
   if(TempValue < TemperatureConfiguration[TypeOfCooling].LowerLimit) {
@@ -24,6 +28,7 @@ void checkAndAlert(
   BreachType breachType = inferBreach(
     batteryChar.coolingType, temperatureInC
   );
+  AlertTarget_fp[alertTarget](breachType);
 }
 
 void sendToController(BreachType breachType) {
@@ -33,16 +38,6 @@ void sendToController(BreachType breachType) {
 
 void sendToEmail(BreachType breachType) {
   const char* recepient = "a.b@c.com";
-  switch(breachType) {
-    case TOO_LOW:
-      printf("To: %s\n", recepient);
-      printf("Hi, the temperature is too low\n");
-      break;
-    case TOO_HIGH:
-      printf("To: %s\n", recepient);
-      printf("Hi, the temperature is too high\n");
-      break;
-    case NORMAL:
-      break;
-  }
+  printf("To: %s\n", recepient);
+  printf("%s\n",breachAlertMessage[breachType]);
 }

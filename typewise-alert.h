@@ -20,12 +20,12 @@ typedef enum {
   TOO_HIGH
 } BreachType;
 
-BreachType inferBreach(double value, double lowerLimit, double upperLimit);
-BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC);
+BreachType inferBreach(CoolingType TypeOfCooling, double TempValue);
 
 typedef enum {
   TO_CONTROLLER,
   TO_EMAIL
+  NUMBEROF_ALERT_TARGETS
 } AlertTarget;
 
 typedef struct {

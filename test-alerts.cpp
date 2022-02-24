@@ -20,6 +20,7 @@ TEST_CASE("checks the main function Alert Target CONTROLLER") {
   CoolingType coolingtype = MED_ACTIVE_COOLING;
   BatteryCharacter batteryChar = {coolingtype, "BrandX"};
   checkAndAlert(alertTarget, batteryChar, 45);
+  checkAndAlert(alertTarget, batteryChar, 30);
   checkAndAlert(alertTarget, batteryChar, -5);
 }
 
@@ -28,6 +29,7 @@ TEST_CASE("checks the main function Alert Target EMAIL") {
   CoolingType coolingtype = HI_ACTIVE_COOLING;
   BatteryCharacter batteryChar = {coolingtype, "BrandX"};
   checkAndAlert(alertTarget, batteryChar, -10);
+  checkAndAlert(alertTarget, batteryChar, 30);
   checkAndAlert(alertTarget, batteryChar, 55);
 }
 

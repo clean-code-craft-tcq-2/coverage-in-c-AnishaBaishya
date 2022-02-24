@@ -8,19 +8,13 @@
 #define MED_ACTIVECOOLING_UPPERLIMIT  40
 
 typedef enum {
-  PASSIVE_COOLING,
-  HI_ACTIVE_COOLING,
-  MED_ACTIVE_COOLING,
-  NUMBEROF_COOLING_TYPES
-} CoolingType;
-
-typedef enum {
   NORMAL,
   TOO_LOW,
   TOO_HIGH
 } BreachType;
 
 BreachType inferBreach(CoolingType TypeOfCooling, double TempValue);
+BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC);
 
 typedef enum {
   TO_CONTROLLER,
@@ -38,8 +32,14 @@ typedef struct{
   int UpperLimit;
 }TempConfig;
 
-BreachType checkAndAlert(
+void checkAndAlert(
   AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC);
 
 void sendToController(BreachType breachType);
 void sendToEmail(BreachType breachType);
+
+typedef TempConfig (*ClassifyCoolingType)();
+
+TempConfig PASSIVE_COOLING();
+TempConfig HI_ACTIVE_COOLING();
+TempConfig MED_ACTIVE_COOLING();

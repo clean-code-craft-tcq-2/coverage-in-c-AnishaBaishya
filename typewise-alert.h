@@ -7,11 +7,11 @@
 #define MED_ACTIVECOOLING_LOWERLIMIT  0
 #define MED_ACTIVECOOLING_UPPERLIMIT  40
 
-typedef enum {
-  PASSIVE_COOLING,
-  HI_ACTIVE_COOLING,
-  MED_ACTIVE_COOLING,
-} CoolingType;
+// typedef enum {
+//   PASSIVE_COOLING,
+//   HI_ACTIVE_COOLING,
+//   MED_ACTIVE_COOLING,
+// } CoolingType;
 
 typedef enum {
   NORMAL,

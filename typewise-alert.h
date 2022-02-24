@@ -27,8 +27,8 @@ typedef enum {
 } AlertTarget;
 
 typedef struct{
-  int LowerLimit;
-  int UpperLimit;
+  double LowerLimit;
+  double UpperLimit;
 }TempConfig;
 
 typedef struct {

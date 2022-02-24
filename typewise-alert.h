@@ -11,7 +11,6 @@ typedef enum {
   PASSIVE_COOLING,
   HI_ACTIVE_COOLING,
   MED_ACTIVE_COOLING,
-  NUMBEROF_COOLING_TYPES
 } CoolingType;
 
 typedef enum {
@@ -36,11 +35,11 @@ typedef struct {
   char brand[48];
 } BatteryCharacter;
 
-typedef TempConfig (*ClassifyCoolingType)();
+typedef TempConfig (*CoolingType)();
 
-TempConfig CoolingTypePassive();
-TempConfig CoolingTypeHi_Active();
-TempConfig CoolingTypeMed_Active();
+TempConfig PASSIVE_COOLING();
+TempConfig HI_ACTIVE_COOLING();
+TempConfig MED_ACTIVE_COOLING();
 
 BreachType inferBreach(TempConfig TempConfigCoolingType, double TempValue);
 BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC);

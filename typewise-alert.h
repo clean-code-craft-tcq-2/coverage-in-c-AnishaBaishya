@@ -13,7 +13,7 @@ typedef enum {
   TOO_HIGH
 } BreachType;
 
-BreachType inferBreach(CoolingType TypeOfCooling, double TempValue);
+BreachType inferBreach(TempConfig TempConfigCoolingType, double TempValue);
 BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC);
 
 typedef enum {

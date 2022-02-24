@@ -8,8 +8,8 @@ const char* breachAlertMessage[] = {"Hi, the temperature is Normal","Hi, the tem
 TempConfig setLimitsAccordingToCoolingType(double lowLimit, double highLimit)
 {
 	TempConfig TempLimit;
-	TempLimit.lowerLimitforCoolingType = lowLimit;
-	TempLimit.higherLimitforCoolingType = highLimit;
+	TempLimit.LowerLimit = lowLimit;
+	TempLimit.UpperLimit = highLimit;
 	return TempLimit;
 }
 

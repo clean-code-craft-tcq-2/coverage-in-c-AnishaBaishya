@@ -1,35 +1,56 @@
 #include "typewise-alert.h"
 #include <stdio.h>
 
-TempConfig TemperatureConfiguration[NUMBEROF_COOLING_TYPES]={
-  {PASSIVECOOLING_LOWERLIMIT,PASSIVECOOLING_UPPERLIMIT},
-  {HI_ACTIVECOOLING_LOWERLIMIT,HI_ACTIVECOOLING_UPPERLIMIT},
-  {MED_ACTIVECOOLING_LOWERLIMIT,MED_ACTIVECOOLING_UPPERLIMIT}
-};
-
 void (*AlertTarget_fp[NUMBEROF_ALERT_TARGETS])(BreachType)={sendToController,sendToEmail};
 
 const char* breachAlertMessage[] = {"Hi, the temperature is Normal","Hi, the temperature is too low", "Hi, the temperature is too high"};
 
-BreachType inferBreach(CoolingType TypeOfCooling, double TempValue) {
+TempConfig setLimitsAccordingToCoolingType(double lowLimit, double highLimit)
+{
+	TempConfig TempLimit;
+	TempLimit.lowerLimitforCoolingType = lowLimit;
+	TempLimit.higherLimitforCoolingType = highLimit;
+	return TempLimit;
+}
+
+TempConfig CoolingTypePassive()
+{
+	return setLimitsAccordingToCoolingType(PASSIVECOOLING_LOWERLIMIT,PASSIVECOOLING_UPPERLIMIT);
+}
+
+TempConfig CoolingTypeHi_Active()
+{
+	return setLimitsAccordingToCoolingType(HI_ACTIVECOOLING_LOWERLIMIT,HI_ACTIVECOOLING_UPPERLIMIT);
+}
+
+TempConfig CoolingTypeMed_Active()
+{
+	return setLimitsAccordingToCoolingType(MED_ACTIVECOOLING_LOWERLIMIT,MED_ACTIVECOOLING_UPPERLIMIT);
+}
+
+BreachType inferBreach(TempConfig TempConfigCoolingType, double TempValue) {
   BreachType returnbreachtype = NORMAL;
-  if(TempValue < TemperatureConfiguration[TypeOfCooling].LowerLimit) {
+  if(TempValue < TempConfigCoolingType.LowerLimit) {
     returnbreachtype= TOO_LOW;
   }
-  if(TempValue > TemperatureConfiguration[TypeOfCooling].UpperLimit) {
+  if(TempValue > TempConfigCoolingType.UpperLimit) {
     returnbreachtype = TOO_HIGH;
   }
   return returnbreachtype;
 }
 
-BreachType  checkAndAlert(
+BreachType classifyTemperatureBreach(
+    CoolingType coolingType, double temperatureInC) {
+  TempConfig TempConfigCoolingType;
+  TempConfigCoolingType = ClassifyCoolingType();
+  return inferBreach(TempConfigCoolingType,temperatureInC);
+}
+
+void checkAndAlert(
     AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
 
-  BreachType breachType = inferBreach(
-    batteryChar.coolingType, temperatureInC
-  );
+  BreachType breachType = classifyTemperatureBreach(batteryChar.coolingType, temperatureInC);
   AlertTarget_fp[alertTarget](breachType);
-  return breachType;
 }
 
 void sendToController(BreachType breachType) {

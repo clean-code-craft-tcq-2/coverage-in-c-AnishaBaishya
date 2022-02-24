@@ -13,17 +13,17 @@ TempConfig setLimitsAccordingToCoolingType(double lowLimit, double highLimit)
 	return TempLimit;
 }
 
-TempConfig CoolingTypePassive()
+TempConfig PASSIVE_COOLING()
 {
 	return setLimitsAccordingToCoolingType(PASSIVECOOLING_LOWERLIMIT,PASSIVECOOLING_UPPERLIMIT);
 }
 
-TempConfig CoolingTypeHi_Active()
+TempConfig HI_ACTIVE_COOLING()
 {
 	return setLimitsAccordingToCoolingType(HI_ACTIVECOOLING_LOWERLIMIT,HI_ACTIVECOOLING_UPPERLIMIT);
 }
 
-TempConfig CoolingTypeMed_Active()
+TempConfig MED_ACTIVE_COOLING()
 {
 	return setLimitsAccordingToCoolingType(MED_ACTIVECOOLING_LOWERLIMIT,MED_ACTIVECOOLING_UPPERLIMIT);
 }

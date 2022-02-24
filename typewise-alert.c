@@ -22,14 +22,13 @@ BreachType inferBreach(CoolingType TypeOfCooling, double TempValue) {
   return returnbreachtype;
 }
 
-BreachType  checkAndAlert(
+void checkAndAlert(
     AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
 
   BreachType breachType = inferBreach(
     batteryChar.coolingType, temperatureInC
   );
   AlertTarget_fp[alertTarget](breachType);
-  return breachType;
 }
 
 void sendToController(BreachType breachType) {
